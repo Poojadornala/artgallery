@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Art Gallery</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f0e6f6, #d5e1f2);
+      color: #333;
+      overflow-x: hidden;
+      font-size: 16px;
+    }
+
+    /* Navbar Styling */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #222;
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    nav ul li {
+      display: inline-block;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #ff9800;
+    }
+
+    header {
+      margin-top: 80px;
+      background: #222;
+      color: #fff;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      border-bottom: 3px solid #fff;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin-top: 1rem;
+      font-style: italic;
+      font-size: 1.2rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 3rem;
+      justify-items: center;
+    }
+
+    .art-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      max-width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .art-card:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    }
+
+    .art-card img {
+      max-width: 100%;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .art-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 3rem;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .popup.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .popup img {
+      max-width: 90%;
+      max-height: 60vh;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .popup h2, .popup p {
+      color: white;
+      margin: 0.5rem 0;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #222;
+      color: white;
+      font-size: 1rem;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+    .art-card img {
+  width: 100%;
+  height: 300px; /* Set the desired height for the images */
+  object-fit: cover; /* Ensures the image covers the area without distorting */
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#header">Home</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#footer">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header id="header">
+    <h1>🎨 Virtual Art Gallery</h1>
+    <p>Explore the world of Modern Art</p>
+  </header>
+
+  <main class="gallery" id="gallery">
+    <!-- First Row -->
+    <div class="art-card" onclick="showInfo(0)">
+      <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b6d84ceb-e625-49a1-8305-7943882bef4d/dfwaq8g-4e491c59-0968-45d4-bea9-3506727b9239.png/v1/fill/w_1280,h_854,q_80,strp/nature_impressions___dream_places_by_heinz7777_dfwaq8g-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9ODU0IiwicGF0aCI6IlwvZlwvYjZkODRjZWItZTYyNS00OWExLTgzMDUtNzk0Mzg4MmJlZjRkXC9kZndhcThnLTRlNDkxYzU5LTA5NjgtNDVkNC1iZWE5LTM1MDY3MjdiOTIzOS5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.M42dmQ1Mca5NSL6Q-nqJxeTFY0BrJeNVNmLblKqVPo0 " alt="Artwork 1" loading="lazy" />
+    </div>
+    <div class="art-card" onclick="showInfo(1)">
+      <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/8dbfd9e6-f858-45e7-a042-95aa86b75aba/dh3l965-7b911d43-942b-41dd-a614-e320dccbfc1d.jpg/v1/fill/w_1600,h_2125,q_75,strp/digital_muse_by_bogi380_dh3l965-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjEyNSIsInBhdGgiOiJcL2ZcLzhkYmZkOWU2LWY4NTgtNDVlNy1hMDQyLTk1YWE4NmI3NWFiYVwvZGgzbDk2NS03YjkxMWQ0My05NDJiLTQxZGQtYTYxNC1lMzIwZGNjYmZjMWQuanBnIiwid2lkdGgiOiI8PTE2MDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.V5E16hC27jiYTdyFYUz2YzOUaxLDjRx8yDG9i27wU7M" alt="Artwork 2" loading="lazy" />
+    </div>
+    <div class="art-card" onclick="showInfo(2)">
+      <img src="https://th.bing.com/th/id/OIP.l76vXNLFuLU-b0pbibfn0wHaFj?rs=1&pid=ImgDetMain" alt="Artwork 3" loading="lazy" />
+    </div>
+
+    <!-- Second Row -->
+    <div class="art-card" onclick="showInfo(3)">
+      <img src="https://png.pngtree.com/thumb_back/fh260/background/20240912/pngtree-radiant-natures-awakening-image_16174583.jpg" alt="Artwork 4" loading="lazy" />
+    </div>
+    <div class="art-card" onclick="showInfo(4)">
+      <img src="https://th.bing.com/th/id/R.f7fa114d3d8c91188b1c4210f0c0f2ae?rik=zEnkLXCcNcWdBg&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f2%2f1%2f3%2f1437524-top-mystical-forest-wallpaper-3840x2160.jpg&ehk=EGk56UQQjFbM9vTQP3cK0NvSnRM%2bS7DPUlRXTr%2bEZx4%3d&risl=&pid=ImgRaw&r=0" alt="Artwork 5" loading="lazy" />
+    </div>
+    <div class="art-card" onclick="showInfo(5)">
+      <img src="https://th.bing.com/th/id/OIP.fckQiDu8CpKdzhJQhXynbAHaEJ?rs=1&pid=ImgDetMain" alt="Artwork 6" loading="lazy" />
+    </div>
+
+    <!-- Third Row -->
+    <div class="art-card" onclick="showInfo(6)">
+      <img src="https://img.freepik.com/premium-photo/futuristic-cityscape-illuminated-by-neon-lights_942736-2644.jpg" alt="Artwork 7" loading="lazy" />
+    </div>
+    <div class="art-card" onclick="showInfo(7)">
+      <img src="https://th.bing.com/th/id/OIP.3155WLJYEImjqp80M95TJwHaHa?rs=1&pid=ImgDetMain" alt="Artwork 8" loading="lazy" />
+    </div>
+    <div class="art-card" onclick="showInfo(8)">
+      <img src="https://thumbs.dreamstime.com/b/generative-ai-art-geometric-pattern-geometry-motion-mesmerizing-background-279117869.jpg" alt="Artwork 9" loading="lazy" />
+    </div>
+  </main>
+
+  <div id="popup" class="popup">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <img id="popup-img" src="" alt="Popup Art" />
+    <h2 id="popup-title"></h2>
+    <p id="popup-desc"></p>
+  </div>
+
+  <footer id="footer">
+    <p>&copy; 2025 Dornala Pooja | Virtual Art Gallery | <a href="mailto:poojadornla0507@gmail.com">Mail</a> </p>
+    <p>  <a href="https://github.com/Poojadornala">GitHub</a></p>
+  </footer>
+
+  <script>
+    const artworks = [
+      { src: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b6d84ceb-e625-49a1-8305-7943882bef4d/dfwaq8g-4e491c59-0968-45d4-bea9-3506727b9239.png/v1/fill/w_1280,h_854,q_80,strp/nature_impressions___dream_places_by_heinz7777_dfwaq8g-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9ODU0IiwicGF0aCI6IlwvZlwvYjZkODRjZWItZTYyNS00OWExLTgzMDUtNzk0Mzg4MmJlZjRkXC9kZndhcThnLTRlNDkxYzU5LTA5NjgtNDVkNC1iZWE5LTM1MDY3MjdiOTIzOS5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.M42dmQ1Mca5NSL6Q-nqJxeTFY0BrJeNVNmLblKqVPo0', title: 'Impression of Dreams', desc: 'An abstract painting that evokes imagination and flow.' },
+      { src: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/8dbfd9e6-f858-45e7-a042-95aa86b75aba/dh3l965-7b911d43-942b-41dd-a614-e320dccbfc1d.jpg/v1/fill/w_1600,h_2125,q_75,strp/digital_muse_by_bogi380_dh3l965-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjEyNSIsInBhdGgiOiJcL2ZcLzhkYmZkOWU2LWY4NTgtNDVlNy1hMDQyLTk1YWE4NmI3NWFiYVwvZGgzbDk2NS03YjkxMWQ0My05NDJiLTQxZGQtYTYxNC1lMzIwZGNjYmZjMWQuanBnIiwid2lkdGgiOiI8PTE2MDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.V5E16hC27jiYTdyFYUz2YzOUaxLDjRx8yDG9i27wU7M', title: 'Digital Muse', desc: 'Modern digital art symbolizing creativity in chaos.' },
+      { src: 'https://th.bing.com/th/id/OIP.l76vXNLFuLU-b0pbibfn0wHaFj?rs=1&pid=ImgDetMain', title: 'Surreal Mirage', desc: 'Inspired by Dali, this piece bends reality and fantasy.' },
+      { src: 'https://png.pngtree.com/thumb_back/fh260/background/20240912/pngtree-radiant-natures-awakening-image_16174583.jpg', title: 'Nature’s Awakening', desc: 'A vivid portrayal of a new dawn, with colors of life blooming.' },
+      { src: 'https://th.bing.com/th/id/R.f7fa114d3d8c91188b1c4210f0c0f2ae?rik=zEnkLXCcNcWdBg&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f2%2f1%2f3%2f1437524-top-mystical-forest-wallpaper-3840x2160.jpg&ehk=EGk56UQQjFbM9vTQP3cK0NvSnRM%2bS7DPUlRXTr%2bEZx4%3d&risl=&pid=ImgRaw&r=0', title: 'Mystical Forest', desc: 'A deep dive into a magical forest with ethereal lights.' },
+      { src: 'https://th.bing.com/th/id/OIP.fckQiDu8CpKdzhJQhXynbAHaEJ?rs=1&pid=ImgDetMain', title: 'Ocean’s Embrace', desc: 'A serene landscape showing the tranquility of ocean waves.' },
+      { src: 'https://img.freepik.com/premium-photo/futuristic-cityscape-illuminated-by-neon-lights_942736-2644.jpg', title: 'City of Tomorrow', desc: 'A futuristic cityscape illuminated by neon lights.' },
+      { src: 'https://th.bing.com/th/id/OIP.3155WLJYEImjqp80M95TJwHaHa?rs=1&pid=ImgDetMain', title: 'Cosmic Journey', desc: 'An artistic representation of a voyage through outer space.' },
+      { src: 'https://thumbs.dreamstime.com/b/generative-ai-art-geometric-pattern-geometry-motion-mesmerizing-background-279117869.jpg', title: 'Geometric Visions', desc: 'A mesmerizing artwork of geometric patterns in motion.' }
+    ];
+
+    function showInfo(index) {
+      const popup = document.getElementById('popup');
+      document.getElementById('popup-img').src = artworks[index].src;
+      document.getElementById('popup-title').innerText = artworks[index].title;
+      document.getElementById('popup-desc').innerText = artworks[index].desc;
+      popup.classList.add('show');
+    }
+
+    function closePopup() {
+      document.getElementById('popup').classList.remove('show');
+    }
+  </script>
+</body>
+</html>
